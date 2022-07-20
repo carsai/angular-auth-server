@@ -29,12 +29,13 @@ const nuevoUsuario = async (req, res) => {
 
     await dbUsuario.save();
 
-    const token = await generarJWT(dbUsuario.id, name);
+    const token = await generarJWT(dbUsuario.id);
 
     return res.status(201).json({
       ok: true,
       uid: dbUsuario.id,
       name,
+      email,
       token,
     });
   } catch (error) {
@@ -74,11 +75,12 @@ const loginUsuario = async (req, res) => {
       });
     }
 
-    const token = await generarJWT(dbUsuario.id, dbUsuario.name);
+    const token = await generarJWT(dbUsuario.id);
 
     return res.json({
       ok: true,
       uid: dbUsuario.id,
+      email: dbUsuario.email,
       name: dbUsuario.name,
       token,
     });
@@ -98,14 +100,17 @@ const loginUsuario = async (req, res) => {
  * @param {import('express').Response} res
  */
 const validarToken = async (req, res) => {
-  const { uid, name } = req;
+  const { uid } = req;
 
-  const token = await generarJWT(uid, name);
+  const token = await generarJWT(uid);
+
+  const usuarioDB = await Usuario.findById(uid);
 
   return res.json({
     ok: true,
     uid,
-    name,
+    name: usuarioDB.name,
+    email: usuarioDB.email,
     token,
   });
 };
