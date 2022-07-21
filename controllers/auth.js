@@ -4,7 +4,7 @@ const Usuario = require('../models/Usuario');
 const { generarJWT } = require('../helpers/jwt');
 
 /**
- *
+ * Crear Usuario
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
@@ -49,7 +49,7 @@ const nuevoUsuario = async (req, res) => {
 };
 
 /**
- *
+ * Login Usuario
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
@@ -95,7 +95,7 @@ const loginUsuario = async (req, res) => {
 };
 
 /**
- *
+ * Validar Token
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
